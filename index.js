@@ -45,8 +45,8 @@ const server = http.createServer(function (req, res) {
       const payloadString = JSON.stringify(payload);
 
       res.setHeader("Content-Type", "application/json");
-      res.end(payloadString);
       res.writeHead(statusCode);
+      res.end(payloadString);
     });
   });
 });
@@ -68,3 +68,11 @@ const router = {
   sample: handlers.sample,
   notFound: handlers.notFound,
 };
+
+// class Router {
+//   sample(data, callback) {
+//     callback(200, { name: "sample handler" });
+//   }
+// }
+
+// const router2 = new Router();
