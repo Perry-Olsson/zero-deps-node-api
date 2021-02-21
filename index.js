@@ -2,6 +2,7 @@ const http = require("http");
 const StringDecoder = require("string_decoder").StringDecoder;
 const Router = require("./Router");
 const config = require("./config");
+const parseRequest = require("./utils");
 
 const server = http.createServer(function (req, res) {
   const { trimmedPath, queryStringObject, method, headers } = parseRequest(
@@ -23,9 +24,9 @@ const server = http.createServer(function (req, res) {
 
     let routeHandler;
     if (trimmedPath === "") routeHandler = router.home;
-    else if (router[trimmedPath] === "undefined")
+    else if (router[trimmedPath] === undefined) {
       routeHandler = router.notFound;
-    else routeHandler = router[trimmedPath];
+    } else routeHandler = router[trimmedPath];
 
     const data = {
       trimmedPath,
@@ -54,19 +55,3 @@ server.listen(config.port, () => {
     `Server is listening on port ${config.port} in ${config.envName}`
   );
 });
-
-const parseRequest = req => {
-  const url = new URL(req.url, "http://localhost:3001");
-
-  const path = url.pathname;
-
-  const trimmedPath = path.replace(/^\/+|\/+$/g, "");
-
-  const queryStringObject = url.searchParams;
-
-  const method = req.method.toLowerCase();
-
-  const headers = req.headers;
-
-  return { trimmedPath, queryStringObject, method, headers };
-};
