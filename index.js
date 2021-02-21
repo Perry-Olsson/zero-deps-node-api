@@ -1,6 +1,7 @@
 const http = require("http");
 const StringDecoder = require("string_decoder").StringDecoder;
 const Router = require("./Router");
+const config = require("./config");
 
 const server = http.createServer(function (req, res) {
   const { trimmedPath, queryStringObject, method, headers } = parseRequest(
@@ -48,11 +49,13 @@ const server = http.createServer(function (req, res) {
   });
 });
 
-server.listen(3001, () => {
-  console.log(`Server is listening on port 3001`);
+server.listen(config.port, () => {
+  console.log(
+    `Server is listening on port ${config.port} in ${config.envName}`
+  );
 });
 
-const parseRequest = (req, res) => {
+const parseRequest = req => {
   const url = new URL(req.url, "http://localhost:3001");
 
   const path = url.pathname;
