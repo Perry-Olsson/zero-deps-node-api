@@ -3,6 +3,11 @@ const https = require("https");
 const config = require("./config");
 const app = require("./app");
 const fs = require("fs");
+const _data = require("./lib/data");
+
+_data.create("test", "newFile", { foo: "bar" }, function (err) {
+  if (err) console.log(err);
+});
 
 const httpServer = http.createServer((req, res) => app(req, res));
 
