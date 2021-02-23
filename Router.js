@@ -3,8 +3,12 @@ class Router {
     callback(200, { data: "homepage" });
   }
 
-  sample(data, callback) {
-    callback(200, { data: "sample handler" });
+  hello(data, callback) {
+    callback(200, { data: { message: "Hello there, whoever you might be." } });
+  }
+
+  ping(data, callback) {
+    callback(200);
   }
 
   notFound(data, callback) {
